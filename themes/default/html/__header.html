@@ -75,7 +75,9 @@
               {% for item in asset_menu_items %}
                 <li class="nav-item" data-searchable-value="{{ item.description }} {{ item.class }}">
                   <a class="nav-link {% if left_menu == 'asset/' ~ item.id %}active{% endif %}" href="/{{nav_item}}/asset/{{ item.id }}">
+                    {% if item.excluded == 1 %}<del>{{ item.description }}</del>{% else %}
                     {{ item.description }}
+                    {% endif %}
                   </a>
                 </li>
                 {% endfor %}
@@ -92,7 +94,9 @@
               {% for item in closed_accounts %}
                 <li class="nav-item" data-searchable-value="{{ item.description }} {{ item.class }}">
                   <a class="nav-link {% if left_menu == 'asset/' ~ item.id %}active{% endif %}" href="/{{nav_item}}/asset/{{ item.id }}">
+                    {% if item.excluded == 1 %}<del>{{ item.description }}</del>{% else %}
                     {{ item.description }}
+                    {% endif %}
                   </a>
                 </li>
                 {% endfor %}

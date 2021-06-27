@@ -45,6 +45,7 @@ class Document extends Theme {
                 $vars['asset_class'] = $entity->getClass();
                 $vars['asset_class_id'] = $entity->getClassID();
                 $vars['closed'] = $entity->isClosed();
+                $vars['excluded'] = $entity->isExcluded();
             }
         } elseif ($vars['type'] == 'class') {
             $logQuery = $this->db->query("SELECT

@@ -3,6 +3,9 @@
             {% if closed == 1 %}
                 <span class="badge badge-pill badge-danger">Closed</span>
             {% endif %}
+            {% if excluded == 1 %}
+                <span class="badge badge-pill badge-warning">Excluded</span>
+            {% endif %}
         {% endif %}
     </div>
     <div class="col">

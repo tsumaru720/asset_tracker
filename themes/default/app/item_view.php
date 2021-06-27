@@ -15,12 +15,14 @@ class Document extends Theme {
 
         if ($vars['left_menu'] != 'all') {
             $vars['modifier'] = "=";
+            $showExcluded = true;
         } else {
             $vars['item_id'] = 0;
             $vars['modifier'] = ">";
+            $showExcluded = false;
         }
         $data = array(':item_id' => $vars['item_id']);
-
+echo "test";
         if ($vars['type'] == 'asset') {
             $dataQuery = $this->db->query("SELECT
                                             SUM(deposit_value) AS deposit_total,
@@ -46,6 +48,7 @@ class Document extends Theme {
                 $vars['asset_class'] = $entity->getClass();
                 $vars['asset_class_id'] = $entity->getClassID();
                 $vars['closed'] = $entity->isClosed();
+                $vars['excluded'] = $entity->isExcluded();
             }
         } elseif ($vars['type'] == 'class') {
             $dataQuery = $this->db->query("SELECT

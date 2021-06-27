@@ -4,6 +4,7 @@ class AssetEntity extends EntityObject {
     private $class_id = null;
     private $class = null;
     private $closed = null;
+    private $excluded = null;
 
     public function __construct(&$data) {
         $this->id = $data['id'];
@@ -11,6 +12,7 @@ class AssetEntity extends EntityObject {
         $this->class_id = $data['class_id'];
         $this->class = $data['class'];
         $this->closed = $data['closed'];
+        $this->excluded = $data['excluded'];
     }
 
     public function getClass() {
@@ -23,5 +25,9 @@ class AssetEntity extends EntityObject {
 
     public function isClosed() {
         return $this->closed;
+    }
+
+    public function isExcluded() {
+        return $this->excluded;
     }
 }

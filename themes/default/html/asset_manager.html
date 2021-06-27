@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="form-group row mb-3">
+        <div class="form-group row mb-2">
             <label class="col-sm-2 form-check-label text-right" for="closed">Closed</label>
             <div class="col-sm-3 form-check ml-3">
                 <input type="checkbox" class="form-check-input" name="closed" id="closed" value="true" {% if form_closed == true %}checked{% endif %}>
@@ -48,6 +48,13 @@
         </div>
 
         <div class="form-group row">
+            <label class="col-sm-2 form-check-label text-right" for="excluded">Exclude</label>
+            <div class="col-sm-3 form-check ml-3">
+                <input type="checkbox" class="form-check-input" name="excluded" id="excluded" value="true" {% if form_excluded == true %}checked{% endif %}>
+            </div>
+        </div>
+
+        <div class="form-group row mt-3">
             <div class="col-sm-2">
                 &nbsp;
             </div>

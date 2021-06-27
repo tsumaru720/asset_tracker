@@ -44,6 +44,7 @@ class Document extends Theme {
             $this->vars['form_description'] = $asset->getDescription();
             $this->vars['form_class'] = $asset->getClassID();
             $this->vars['form_closed'] = $asset->isClosed();
+            $this->vars['form_excluded'] = $asset->isExcluded();
 
             $this->document = $this->twig->load('asset_manager.html');
         } elseif ($action == "delete") {
@@ -60,13 +61,13 @@ class Document extends Theme {
     private function processPost($action) {
         if ($action == "new") {
             if ($data = $this->assetValidation()) {
-                $this->db->query("INSERT INTO `asset_list` (`id`, `asset_class`, `description`, `closed`) VALUES (NULL, :class_id, :description, :closed)", $data);
+                $this->db->query("INSERT INTO `asset_list` (`id`, `asset_class`, `description`, `closed`, `excluded`) VALUES (NULL, :class_id, :description, :closed, :excluded)", $data);
             }
             $this->document = $this->twig->load('asset_manager.html');
         } elseif ($action == "edit") {
             if ($data = $this->assetValidation()) {
                 $data['asset_id'] = $this->vars['item_id'];
-                $this->db->query("UPDATE `asset_list` SET `asset_class` = :class_id, `description` = :description, `closed` = :closed WHERE `asset_list`.`id` = :asset_id", $data);
+                $this->db->query("UPDATE `asset_list` SET `asset_class` = :class_id, `description` = :description, `closed` = :closed, `excluded` = :excluded WHERE `asset_list`.`id` = :asset_id", $data);
                 header('Location: /view/asset/'.$data['asset_id']);
             } else {
                 $this->document = $this->twig->load('asset_manager.html');
@@ -99,6 +100,7 @@ class Document extends Theme {
             $description = $this->validateInput('description');
             $class = $this->validateInput('class');
             $closed = $this->validateInput('closed');
+            $excluded = $this->validateInput('excluded');
             $validated = true;
 
             if (($description == false) || $class == false) {
@@ -111,6 +113,12 @@ class Document extends Theme {
                 $closed = '1';
             } else {
                 $closed = '0';
+            }
+
+            if ($excluded) {
+                $excluded = '1';
+            } else {
+                $excluded = '0';
             }
 
             if (strlen($description) > 40) {
@@ -151,13 +159,14 @@ class Document extends Theme {
                 $this->vars['form_description'] = $description;
                 $this->vars['form_class'] = $class;
                 $this->vars['form_closed'] = $closed;
+                $this->vars['form_excluded'] = $closed;
 
                 return false;
             } else {
                 $this->vars['success'] = true;
                 $this->vars['form_class'] = $class; //Pre-select last chosen class (easier when adding lots)
 
-                return array(':description' => $description, ':class_id' => $class, ':closed' => $closed);
+                return array(':description' => $description, ':class_id' => $class, ':closed' => $closed, ':excluded' => $excluded);
             }
     }
 }
